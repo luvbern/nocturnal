@@ -1,0 +1,20 @@
+.emo {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    vertical-align: middle;
+    background-size: contain;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.emo-smile { background-image: url('https://didanim.github.io/OmniOtakuu/emo/smile.gif'); }
+.emo-angry { background-image: url('https://didanim.github.io/OmniOtakuu/emo/angry.gif'); }
+.emo-laugh { background-image: url('https://didanim.github.io/OmniOtakuu/emo/happy.gif'); }
+.emo-xd    { background-image: url('https://didanim.github.io/OmniOtakuu/emo/laugh.gif'); }
+.emo-cry   { background-image: url('https://didanim.github.io/OmniOtakuu/emo/cry.gif'); }
+.emo-kiss  { background-image: url('https://didanim.github.io/OmniOtakuu/emo/kiss2.gif'); }
+.emo-tongue{ background-image: url('https://didanim.github.io/OmniOtakuu/emo/ble.gif'); }
+.emo-shock { background-image: url('https://didanim.github.io/OmniOtakuu/emo/shock.gif'); }
+.emo-sad   { background-image: url('https://didanim.github.io/OmniOtakuu/emo/sad.gif'); }
+.emo-wink   { background-image: url('https://didanim.github.io/OmniOtakuu/emo/wink.gif'); }
