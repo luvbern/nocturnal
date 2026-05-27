@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const savedName = localStorage.getItem('savedUserName');
+    const existingName = localStorage.getItem('savedUserName');
     
-    if (savedName) {
+    if (existingName) {
         const nameElements = document.querySelectorAll('.global-username');
-        
         nameElements.forEach(element => {
-            element.textContent = savedName;
+            element.textContent = existingName;
         });
     }
 });
