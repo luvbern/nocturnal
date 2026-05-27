@@ -30,7 +30,7 @@ async function loadFeed() {
     post.className = "feed-post";
 
     post.innerHTML = `
-     <img class="feed-avatar" src="https://cdn3.emoji.gg/emojis/653039-dropletheart.gif" alt="avatar">
+     <img class="feed-avatar" src="https://file.garden/ag8JwXEGxlB3Dv6B/meme.png" alt="avatar">
       <div class="feed-content">
 
         <div class="feed-header">
