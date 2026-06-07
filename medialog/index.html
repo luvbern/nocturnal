@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Log - Nocturnal Diary</title>
+    <style>
+        :root {
+            --bg-dark: #051616;
+            --frame-grey: #9299a1;
+            --door-width: 180px;
+            --door-height: 340px;
+            --steel: #95a5a6;
+            --steel-dark: #5f6b6d;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+            cursor: url("https://file.garden/ag8JwXEGxlB3Dv6B/Normal%20Select.cur"), auto;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);
+            background-size: 50px 50px;
+            color: white;
+            font-family: 'Kablammo', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            animation: move-background 10s linear infinite;
+            perspective: 1000px;
+        }
+
+        @keyframes move-background {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        img {
+            cursor: url("https://file.garden/ag8JwXEGxlB3Dv6B/Link%20Select.cur"), auto;
+        }
+
+        /* 3D Circular Ring Viewport Arrangement */
+        .vault-stage {
+            position: relative;
+            width: 100vw;
+            height: 550px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s;
+        }
+
+        .door-track {
+            position: absolute;
+            width: var(--door-width);
+            height: var(--door-height);
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .door-container {
+            position: absolute;
+            width: var(--door-width);
+            top: 0;
+            left: 0;
+            text-align: center;
+            transition: opacity 0.5s, transform 0.5s;
+            opacity: 0.25;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backface-visibility: hidden;
+        }
+
+        .door-container.active {
+            opacity: 1;
+        }
+
+        .door-trim-top {
+            width: 100%;
+            height: 24px;
+            background-color: var(--frame-grey);
+            clip-path: polygon(0% 40%, 50% 0%, 100% 40%, 100% 100%, 0% 100%);
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .red-light {
+            width: 10px;
+            height: 10px;
+            background: #4a1212;
+            border-radius: 50%;
+            position: absolute;
+            top: 6px;
+            z-index: 10;
+            transition: 0.3s;
+        }
+
+        .active .red-light {
+            background: #ff0000;
+            box-shadow: 0 0 10px #ff0000, 0 0 4px white;
+        }
+
+        .frame {
+            width: var(--door-width);
+            height: var(--door-height);
+            background: var(--frame-grey);
+            position: relative;
+            padding: 0 12px 0 12px;
+            box-sizing: border-box;
+            perspective: 1200px;
+        }
+
+        .reveal-content {
+            position: absolute;
+            top: 0;
+            left: 12px;
+            right: 12px;
+            bottom: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Target image/background layer to handle zoom effect separate from iframe placement */
+        .reveal-content.neighbors {
+            background: url(https://file.garden/ag8JwXEGxlB3Dv6B/ezgif.com-cut.webp);
+            background-size: cover;
+            background-position: center;
+            border: 2px ridge #000;
+            transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease-in;
+        }
+
+        /* Cinematic zoom transition when door is picked */
+        .vault-stage.zoomed-in .door-container.active .reveal-content.neighbors {
+            transform: scale(35);
+            opacity: 0;
+        }
+
+        /* Hide all unselected doors during sequence */
+        .vault-stage.zoomed-in .door-container:not(.active) {
+            opacity: 0 !important;
+            transform: scale(0) !important;
+            pointer-events: none;
+        }
+
+        /* Hide the selected door outer graphics when iframe fills the screen */
+        .vault-stage.zoomed-in .door-container.active .door-leaf,
+        .vault-stage.zoomed-in .door-container.active .door-trim-top,
+        .vault-stage.zoomed-in .door-container.active .door-name {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .door-leaf {
+            width: calc(100% - 0px);
+            height: 100%;
+            position: relative;
+            transform-origin: left center;
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s;
+            z-index: 5;
+            display: grid;
+            padding: 22px 14px;
+            box-sizing: border-box;
+        }
+
+        .door-container.open .door-leaf {
+            transform: rotateY(-115deg);
+        }
+
+        /* Door Styles overrides mapping */
+        .style-red { background-color:#aa3838; border-left:8px solid #832727; border-top:8px solid #832727; }
+        .style-red .panel { background-color:#6a1a1a; }
+        .style-red .knob { background-color:#421111; }
+        .style-green { background-color:#497c55; border-left:8px solid #376041; border-top:8px solid #376041; padding:26px 20px; }
+        .style-green .panel { background-color:#27452e; padding:16px 12px; }
+        .style-green .knob { background-color:#1a2f20; }
+        .style-blue { background-color:#376ba2; border-left:8px solid #28517e; border-top:8px solid #28517e; }
+        .style-blue .panel { background-color:#204167; }
+        .style-blue .knob { background-color:#122842; }
+        .style-yellow { background-color:#f1e665; border-left:8px solid #c2b740; border-top:8px solid #c2b740; }
+        .style-yellow .panel { background-color:#b3a830; }
+        .style-yellow .knob { background-color:#79711c; }
+        .style-orange { background-color:#ca6e46; border-left:8px solid #a05331; border-top:8px solid #a05331; }
+        .orange-door .panel { background-color:#8c4728; }
+        .orange-door .knob { background-color:#552814; }
+        .panel { border-left:4px solid rgba(0,0,0,0.2); border-top:4px solid rgba(0,0,0,0.2); border-radius:2px; box-sizing:border-box; width:100% !important; height:100% !important; }
+        .four-panel { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:15px 12px; }
+        .two-vert { grid-template-columns:1fr 1fr; grid-template-rows:1fr; gap:0 12px; }
+        .three-horiz { grid-template-columns:1fr; grid-template-rows:1fr 1fr 1fr; gap:14px 0; }
+        .six-panel { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr 1fr; gap:12px 10px; }
+        .inner-nested-panel { width:100%; height:100%; background-color:#497c55; border-left:4px solid rgba(0,0,0,0.2); border-top:4px solid rgba(0,0,0,0.2); box-sizing:border-box; }
+        .knob { width:22px; height:22px; border-radius:50%; position:absolute; right:5px; top:50%; transform:translateY(-50%); box-shadow:inset 2px 2px 0px rgba(0,0,0,0.25); z-index:6; }
+        .door-name { margin-top:20px; font-size:1em; letter-spacing:2px; color:#bdc3c7; text-transform:uppercase; font-weight:bold; transition: opacity 0.5s; }
+        
+        .nav-buttons { display:flex; gap:20px; margin-top:10px; transition: opacity 0.5s; }
+        .monster-btn { position:relative; width:100px; height:50px; border:none; background:linear-gradient( to bottom,var(--steel),var(--steel-dark) ); color:white; font-weight:900; letter-spacing:2px; text-transform:uppercase; font-size:16px; border-radius:14px; box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.35),0 10px 18px rgba(0,0,0,.4); transition:transform .15s ease,box-shadow .2s ease; }
+        .monster-btn::before { content:""; position:absolute; inset:5px; border:3px solid rgba(255,255,255,.25); border-radius:10px; pointer-events:none; }
+        .monster-btn:hover { transform:translateY(-3px); cursor:url("https://file.garden/ag8JwXEGxlB3Dv6B/Link%20Select.cur"),auto; }
+        .monster-btn:active { transform:translateY(3px); box-shadow:inset 0 2px 0 rgba(255,255,255,.2),inset 0 -2px 0 rgba(0,0,0,.4),0 4px 8px rgba(0,0,0,.35); }
+        .bolt { position:absolute; width:8px; height:8px; background:#dfe6e9; border-radius:50%; box-shadow:inset 0 -1px 2px rgba(0,0,0,.5); }
+        .b1 { top:8px; left:8px; } .b2 { top:8px; right:8px; } .b3 { bottom:8px; left:8px; } .b4 { bottom:8px; right:8px; }
+        
+        .style-pink { background-color:#feabd0; border-left:8px solid #ea558f; border-top:8px solid #ea558f; padding:26px 20px; }
+        .style-pink .panel { background-color:#E30B5C; padding:16px 12px; }
+        .style-pink .knob { background-color:#E30B5C; }
+        .style-dusty { background-color:#f5c4ce; border-left:8px solid #eeb0be; border-top:8px solid #eeb0be; padding:26px 20px; }
+        .style-dusty .panel { background-color:#eeafbd; padding:16px 12px; }
+        .style-dusty .knob { background-color:#eb8ebc; }
+        .style-purple { background-color:#e394d8; border-left:8px solid #b077b9; border-top:8px solid #b077b9; padding:26px 20px; }
+        .style-purple .panel { background-color:#b86ddf; padding:16px 12px; }
+        .style-purple .knob { background-color:#975eb5; }
+
+        /* Full Screen Content Iframe Container View */
+        #content-view-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 100;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #content-view-screen.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #content-view-screen iframe {
+            width: 100%;
+            flex-grow: 1;
+            border: none;
+            background: #000;
+        }
+
+        .back-vault-bar {
+            background: #111;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-start;
+            border-bottom: 3px solid var(--frame-grey);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vault-stage" id="stage">
+        <div class="door-track" id="track">
+            
+            <div class="door-container" data-index="0">
+                <div class="door-trim-top"><div class="red-light"></div></div>
+                <div class="frame" onclick="handleDoorClick(0)">
+                    <div class="reveal-content neighbors"> 
+                        </div>
+                    <div class="door-leaf style-green">
+                        <div class="panel">
+                            <div class="inner-nested-panel"></div>
+                        </div>
+                        <div class="knob"></div>
+                    </div>
+                </div>
+                <div class="door-name">Anime Watchlist</div>
+            </div>
+
+            <div class="door-container" data-index="1">
+                <div class="door-trim-top"><div class="red-light"></div></div>
+                <div class="frame" onclick="handleDoorClick(1)">
+                    <div class="reveal-content neighbors"></div>
+                    <div class="door-leaf style-blue two-vert">
+                        <div class="panel"></div><div class="panel"></div>
+                        <div class="knob"></div>
+                    </div>
+                </div>
+                <div class="door-name">Comics Reading List</div>
+            </div>
+            
+            <div class="door-container" data-index="2">
+                <div class="door-trim-top"><div class="red-light"></div></div>
+                <div class="frame" onclick="handleDoorClick(2)">
+                    <div class="reveal-content neighbors"></div>
+                    <div class="door-leaf style-pink four-panel">
+                        <div class="panel"></div><div class="panel"></div>
+                        <div class="panel"></div><div class="panel"></div>
+                        <div class="knob"></div>
+                    </div>
+                </div>
+                <div class="door-name">Movie</div>
+            </div>
+
+            <div class="door-container" data-index="3">
+                <div class="door-trim-top"><div class="red-light"></div></div>
+                <div class="frame" onclick="handleDoorClick(3)">
+                     <div class="reveal-content neighbors"></div>
+                    <div class="door-leaf style-dusty three-horiz">
+                        <div class="panel"></div><div class="panel"></div><div class="panel"></div>
+                        <div class="knob"></div>
+                    </div>
+                </div>
+                <div class="door-name">Tv Shows</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="nav-buttons" id="controls">
+        <button class="monster-btn prev" onclick="move(-1)">  
+            <span class="bolt b1"></span><span class="bolt b2"></span>
+            <span class="bolt b3"></span><span class="bolt b4"></span>
+            PRE
+        </button>
+        <button class="monster-btn next" onclick="move(1)">
+            <span class="bolt b1"></span><span class="bolt b2"></span>
+            <span class="bolt b3"></span><span class="bolt b4"></span>
+            Next
+        </button>
+    </div>
+
+    <div id="content-view-screen">
+        <div class="back-vault-bar">
+            <button class="monster-btn" onclick="closePortalPage()">
+                <span class="bolt b1"></span><span class="bolt b2"></span>
+                <span class="bolt b3"></span><span class="bolt b4"></span>
+                RETURN
+            </button>
+        </div>
+        <iframe id="portal-frame" src=""></iframe>
+    </div>
+
+<script>
+let currentIndex = 0;
+const stage = document.getElementById('stage');
+const track = document.getElementById('track');
+const doors = document.querySelectorAll('.door-container');
+const controls = document.getElementById('controls');
+const portalScreen = document.getElementById('content-view-screen');
+const portalFrame = document.getElementById('portal-frame');
+
+let autoScrollInterval; 
+let isHovered = false;  
+
+const pageUrls = {
+    0: "https://itsdida.neocities.org",
+    1: "https://example.com", 
+    2: "https://example.com",
+    3: "https://example.com"
+};
+
+const totalDoors = doors.length;
+const circleRadius = 260; 
+
+function layoutCircleGallery() {
+    doors.forEach((door, i) => {
+        let angle = (i - currentIndex) * (360 / totalDoors);
+        
+        door.style.transform = `rotateY(${angle}deg) translateZ(${circleRadius}px)`;
+        
+        door.classList.remove('active');
+        if (i === currentIndex) {
+            door.classList.add('active');
+        }
+    });
+}
+
+function move(dir) {
+    currentIndex += dir;
+    if (currentIndex < 0) currentIndex = totalDoors - 1;
+    if (currentIndex >= totalDoors) currentIndex = 0;
+    layoutCircleGallery();
+}
+
+function handleDoorClick(index) {
+    if (currentIndex !== index) {
+        currentIndex = index;
+        layoutCircleGallery();
+        return;
+    }
+
+    stopAutoMove();
+    isHovered = true;
+
+    const activeDoor = doors[index];
+    activeDoor.classList.add('open');
+
+    setTimeout(() => {
+        stage.classList.add('zoomed-in');
+        controls.style.opacity = '0';
+        controls.style.pointerEvents = 'none';
+
+        portalFrame.src = pageUrls[index] || "";
+
+        setTimeout(() => {
+            portalScreen.classList.add('visible');
+        }, 900);
+
+    }, 600); 
+}
+
+function closePortalPage() {
+    portalScreen.classList.remove('visible');
+    
+    setTimeout(() => {
+        portalFrame.src = "about:blank";
+        
+        stage.classList.remove('zoomed-in');
+        controls.style.opacity = '1';
+        controls.style.pointerEvents = 'auto';
+
+        doors.forEach(door => door.classList.remove('open'));
+        
+        isHovered = false;
+        startAutoMove();
+    }, 400);
+}
+
+function startAutoMove() {
+    autoScrollInterval = setInterval(() => {
+        if (!isHovered) {
+            move(1);
+        }
+    }, 3000); 
+}
+
+function stopAutoMove() {
+    clearInterval(autoScrollInterval);
+}
+
+doors.forEach((door) => {
+    door.addEventListener('mouseenter', () => isHovered = true);
+    door.addEventListener('mouseleave', () => {
+        if (!stage.classList.contains('zoomed-in')) {
+            isHovered = false;
+        }
+    });
+});
+
+layoutCircleGallery();
+startAutoMove();
+</script>
+</body>
+</html>
