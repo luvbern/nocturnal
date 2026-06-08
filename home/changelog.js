@@ -52,7 +52,7 @@ async function loadFeed() {
         </div>
 
          <a class="feed-link" href="${link}">
-          View Update
+          <span style="width:20px;height:20px;background-image:url("home/assets/bluearrow.gif");background-size:cover;background-position:center;display:block;"</span>View Update
         </a>
 
       </div>
