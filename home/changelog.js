@@ -30,7 +30,7 @@ async function loadFeed() {
     post.className = "feed-post";
 
     post.innerHTML = `
-     <img class="feed-avatar" src="https://file.garden/ag8JwXEGxlB3Dv6B/notalking.gif" alt="avatar">
+     <img class="feed-avatar" src="https://file.garden/ag8JwXEGxlB3Dv6B/Borders/trashcanme.png" alt="avatar">
       <div class="feed-content">
 
         <div class="feed-header">
