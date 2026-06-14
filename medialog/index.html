@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Eater&amp;display=swap" rel="stylesheet">
-    <style>
+        <style>
         :root {
             --bg-dark: #051616;
             --frame-grey: #9299a1;
@@ -21,13 +21,12 @@
             box-sizing: inherit;
             cursor: url("https://file.garden/ag8JwXEGxlB3Dv6B/Normal%20Select.cur"), auto;
         }
+        .monster-btn:hover,.door-leaf,.panel,img{cursor:url("https://file.garden/ag8JwXEGxlB3Dv6B/Link%20Select.cur"),auto; }
 
         body {
-            background-color: var(--bg-dark);
-            background-image: linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);
-            background-size: 50px 50px;
-            color: white;
-            font-family: 'Kablammo', sans-serif;
+            background-image: url(https://file.garden/ag8JwXEGxlB3Dv6B/bg/noccbg.jpg);
+            background-repeat: no-repeat;
+            background-size:cover;
             margin: 0;
             overflow: hidden;
             display: flex;
@@ -35,23 +34,32 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            animation: move-background 10s linear infinite;
-            perspective: 1000px;
+            perspective: 1500px;
         }
+        
+      .medialog {
+  background-image: url('https://file.garden/ag8JwXEGxlB3Dv6B/bg/medialogtitle.png');
+  
+  background-position: center;
+  background-repeat: no-repeat;
 
-        @keyframes move-background {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
+  background-size: contain; 
+  
+  width: 100%;
+  max-width: 600px; 
+  height: 150px;    
 
-        img {
-            cursor: url("https://file.garden/ag8JwXEGxlB3Dv6B/Link%20Select.cur"), auto;
-        }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+       
 
         .vault-stage {
             position: relative;
             width: 100vw;
-            height: 550px;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -65,24 +73,31 @@
             height: var(--door-height);
             transform-style: preserve-3d;
             transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .door-container {
             position: absolute;
             width: var(--door-width);
-            top: 0;
-            left: 0;
             text-align: center;
-            transition: opacity 0.5s, transform 0.5s;
-            opacity: 0.65;
+            transition: opacity 0.6s, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
             backface-visibility: hidden;
+            animation: float 6s ease-in-out infinite alternate;
         }
 
+        @keyframes float {
+            0% { margin-top: 20px; rotate: 2deg; }
+            100% { margin-top: 10px; rotate: 1deg; }
+        }
+
+        /* Focused door styling */
         .door-container.active {
-            opacity: 1;
+            z-index: 10;
         }
 
         .door-trim-top {
@@ -200,49 +215,81 @@
             transition: opacity 0.5s;
             pointer-events: none;
         }
-        .door-container:nth-child(even) .door-name{transform: rotate(7deg);}
+        .door-container:nth-child(even) .door-name { transform: rotate(7deg); }
 
-        .style-red { background-color:#aa3838; border-left:8px solid #832727; border-top:8px solid #832727; }
-        .style-red .panel { background-color:#6a1a1a; }
-        .style-red .knob { background-color:#421111; }
-        .style-green { background-color:#497c55; border-left:8px solid #376041; border-top:8px solid #376041; padding:26px 20px; }
-        .style-green .panel { background-color:#27452e; padding:16px 12px; }
-        .style-green .knob { background-color:#1a2f20; }
-        .style-blue { background-color:#376ba2; border-left:8px solid #28517e; border-top:8px solid #28517e; }
-        .style-blue .panel { background-color:#204167; }
-        .style-blue .knob { background-color:#122842; }
-        .style-yellow { background-color:#f1e665; border-left:8px solid #c2b740; border-top:8px solid #c2b740; }
-        .style-yellow .panel { background-color:#b3a830; }
-        .style-yellow .knob { background-color:#79711c; }
-        .style-orange { background-color:#ca6e46; border-left:8px solid #a05331; border-top:8px solid #a05331; }
-        .orange-door .panel { background-color:#8c4728; }
-        .orange-door .knob { background-color:#552814; }
+.style-purple {
+    background-color: #7a5ccf;
+    border-left: 8px solid #5e46a1;
+    border-top: 8px solid #5e46a1;
+}
+.style-purple .panel {
+    background-color: #3a2c66;
+}
+.style-purple .knob {
+    background-color: #1f1738;
+}
+.style-midnight {
+    background-color: #1b2a49;
+    border-left: 8px solid #14203a;
+    border-top: 8px solid #14203a;
+}
+.style-midnight .panel {
+    background-color: #0f1830;
+}
+.style-midnight .knob {
+    background-color: #080f1f;
+}
+
+.style-moonlight {
+    background-color: #4a5d8c;
+    border-left: 8px solid #38486d;
+    border-top: 8px solid #38486d;
+    padding: 26px 20px;
+}
+.style-moonlight .panel {
+    background-color: #2a3554;
+    padding: 16px 12px;
+}
+.style-moonlight .knob {
+    background-color: #1b2238;
+}
+
+.style-twilight {
+    background-color: #32456b;
+    border-left: 8px solid #253553;
+    border-top: 8px solid #253553;
+}
+.style-twilight .panel {
+    background-color: #1b2742;
+}
+.style-twilight .knob {
+    background-color: #10182c;
+}
+
+.style-starlight {
+    background-color: #6d7da6;
+    border-left: 8px solid #556389;
+    border-top: 8px solid #556389;
+}
+.style-starlight .panel {
+    background-color: #404d70;
+}
+.style-starlight .knob {
+    background-color: #27304a;
+}
         
         .panel { border-left:4px solid rgba(0,0,0,0.2); border-top:4px solid rgba(0,0,0,0.2); border-radius:2px; box-sizing:border-box; width:100% !important; height:100% !important; }
         .four-panel { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:15px 12px; }
         .two-vert { grid-template-columns:1fr 1fr; grid-template-rows:1fr; gap:0 12px; }
         .three-horiz { grid-template-columns:1fr; grid-template-rows:1fr 1fr 1fr; gap:14px 0; }
         .six-panel { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr 1fr; gap:12px 10px; }
-        .inner-nested-panel { width:100%; height:100%; background-color:#497c55; border-left:4px solid rgba(0,0,0,0.2); border-top:4px solid rgba(0,0,0,0.2); box-sizing:border-box; }
         .knob { width:22px; height:22px; border-radius:50%; position:absolute; right:5px; top:50%; transform:translateY(-50%); box-shadow:inset 2px 2px 0px rgba(0,0,0,0.25); z-index:6; }
         
-        .nav-buttons { display:flex; gap:20px; margin-top:10px; transition: opacity 0.5s; }
         .monster-btn { position:relative; width:100px; height:50px; border:none; background:linear-gradient( to bottom,var(--steel),var(--steel-dark) ); color:white; font-weight:900; letter-spacing:2px; text-transform:uppercase; font-size:16px; border-radius:14px; box-shadow:inset 0 3px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,0,0,.35),0 10px 18px rgba(0,0,0,.4); transition:transform .15s ease,box-shadow .2s ease; }
         .monster-btn::before { content:""; position:absolute; inset:5px; border:3px solid rgba(255,255,255,.25); border-radius:10px; pointer-events:none; }
-        .monster-btn:hover { transform:translateY(-3px); cursor:url("https://file.garden/ag8JwXEGxlB3Dv6B/Link%20Select.cur"),auto; }
-        .monster-btn:active { transform:translateY(3px); box-shadow:inset 0 2px 0 rgba(255,255,255,.2),inset 0 -2px 0 rgba(0,0,0,.4),0 4px 8px rgba(0,0,0,.35); }
+        .monster-btn:hover { transform:translateY(-3px);}
         .bolt { position:absolute; width:8px; height:8px; background:#dfe6e9; border-radius:50%; box-shadow:inset 0 -1px 2px rgba(0,0,0,.5); }
         .b1 { top:8px; left:8px; } .b2 { top:8px; right:8px; } .b3 { bottom:8px; left:8px; } .b4 { bottom:8px; right:8px; }
-        
-        .style-pink { background-color:#feabd0; border-left:8px solid #ea558f; border-top:8px solid #ea558f; padding:26px 20px; }
-        .style-pink .panel { background-color:#E30B5C; padding:16px 12px; }
-        .style-pink .knob { background-color:#E30B5C; }
-        .style-dusty { background-color:#f5c4ce; border-left:8px solid #eeb0be; border-top:8px solid #eeb0be; padding:26px 20px; }
-        .style-dusty .panel { background-color:#eeafbd; padding:16px 12px; }
-        .style-dusty .knob { background-color:#eb8ebc; }
-        .style-purple { background-color:#e394d8; border-left:8px solid #b077b9; border-top:8px solid #b077b9; padding:26px 20px; }
-        .style-purple .panel { background-color:#b86ddf; padding:16px 12px; }
-        .style-purple .knob { background-color:#975eb5; }
 
         #content-view-screen {
             position: fixed;
@@ -281,18 +328,19 @@
     </style>
 </head>
 <body>
-
+    <div class="medialog"></div>
     <div class="vault-stage" id="stage">
+        
         <div class="door-track" id="track">
             
             <div class="door-container" data-index="0">
                 <div class="door-trim-top"><div class="red-light"></div></div>
                 <div class="frame" onclick="handleDoorClick(0)">
                     <div class="reveal-content neighbors"></div>
-                    <div class="door-leaf style-yellow six-panel">
+                    <div class="door-leaf style-midnight six-panel">
                         <div class="panel"></div><div class="panel"></div><div class="panel"></div><div class="panel"></div><div class="panel"></div><div class="panel"></div>
                         <div class="knob"></div>
-                        <div class="door-name">Anime Watchlist</div>
+                        <div class="door-name">Anime</div>
                     </div>
                 </div>
             </div>
@@ -301,10 +349,10 @@
                 <div class="door-trim-top"><div class="red-light"></div></div>
                 <div class="frame" onclick="handleDoorClick(1)">
                     <div class="reveal-content neighbors"></div>
-                    <div class="door-leaf style-blue two-vert">
+                    <div class="door-leaf style-twilight two-vert">
                         <div class="panel"></div><div class="panel"></div>
                         <div class="knob"></div>
-                        <div class="door-name">Comics List</div>
+                        <div class="door-name">Comics</div>
                     </div>
                 </div>
             </div>
@@ -313,11 +361,11 @@
                 <div class="door-trim-top"><div class="red-light"></div></div>
                 <div class="frame" onclick="handleDoorClick(2)">
                     <div class="reveal-content neighbors"></div>
-                    <div class="door-leaf style-purple four-panel">
+                    <div class="door-leaf style-starlight four-panel">
                         <div class="panel"></div><div class="panel"></div>
                         <div class="panel"></div><div class="panel"></div>
                         <div class="knob"></div>
-                        <div class="door-name">Movie Vault</div>
+                        <div class="door-name">K-Drama</div>
                     </div>
                 </div>
             </div>
@@ -326,28 +374,15 @@
                 <div class="door-trim-top"><div class="red-light"></div></div>
                 <div class="frame" onclick="handleDoorClick(3)">
                      <div class="reveal-content neighbors"></div>
-                    <div class="door-leaf style-dusty three-horiz">
+                    <div class="door-leaf style-purple three-horiz">
                         <div class="panel"></div><div class="panel"></div><div class="panel"></div>
                         <div class="knob"></div>
-                        <div class="door-name">Tv Shows</div>
+                        <div class="door-name">Movies</div>
                     </div>
                 </div>
             </div>
 
         </div>
-    </div>
-
-    <div class="nav-buttons" id="controls">
-        <button class="monster-btn prev" onclick="move(-1)">  
-            <span class="bolt b1"></span><span class="bolt b2"></span>
-            <span class="bolt b3"></span><span class="bolt b4"></span>
-            PRE
-        </button>
-        <button class="monster-btn next" onclick="move(1)">
-            <span class="bolt b1"></span><span class="bolt b2"></span>
-            <span class="bolt b3"></span><span class="bolt b4"></span>
-            Next
-        </button>
     </div>
 
     <div id="content-view-screen">
@@ -364,32 +399,40 @@
 <script>
 let currentIndex = 0;
 const stage = document.getElementById('stage');
-const track = document.getElementById('track');
 const doors = document.querySelectorAll('.door-container');
-const controls = document.getElementById('controls');
 const portalScreen = document.getElementById('content-view-screen');
 const portalFrame = document.getElementById('portal-frame');
 
-let autoScrollInterval; 
-let isHovered = false;  
+let isTransitioning = false; 
 
 const pageUrls = {
-    0: "https://brubolair.neocities.org",
+    0: "https://example.com",
     1: "https://example.com", 
     2: "https://example.com",
     3: "https://example.com"
 };
 
 const totalDoors = doors.length;
-const circleRadius = 160; 
 
-function layoutCircleGallery() {
+function layoutVerticalRabbitHole() {
     doors.forEach((door, i) => {
-        let angle = (i - currentIndex) * (360 / totalDoors);
-        door.style.transform = `rotateY(${angle}deg) translateZ(${circleRadius}px)`;
+        let offset = i - currentIndex;
+        
+        let yTranslate = offset * 580; 
+        
+        let zTranslate = Math.abs(offset) * -180; 
+        let xRotate = offset * -15; 
+        let yRotate = offset * 10; 
+        
         door.classList.remove('active');
+        
         if (i === currentIndex) {
             door.classList.add('active');
+            door.style.opacity = "1";
+            door.style.transform = `translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg)`;
+        } else {
+            door.style.opacity = "0.45";
+            door.style.transform = `translateY(${yTranslate}px) translateZ(${zTranslate}px) rotateX(${xRotate}deg) rotateY(${yRotate}deg)`;
         }
     });
 }
@@ -398,26 +441,34 @@ function move(dir) {
     currentIndex += dir;
     if (currentIndex < 0) currentIndex = totalDoors - 1;
     if (currentIndex >= totalDoors) currentIndex = 0;
-    layoutCircleGallery();
+    layoutVerticalRabbitHole();
 }
+
+window.addEventListener('wheel', (e) => {
+    if (stage.classList.contains('zoomed-in') || isTransitioning) return;
+
+    isTransitioning = true;
+    if (e.deltaY > 0) {
+        move(1);
+    } else {
+        move(-1); 
+    }
+    
+    setTimeout(() => { isTransitioning = false; }, 300);
+}, { passive: true });
 
 function handleDoorClick(index) {
     if (currentIndex !== index) {
         currentIndex = index;
-        layoutCircleGallery();
+        layoutVerticalRabbitHole();
         return;
     }
-
-    stopAutoMove();
-    isHovered = true;
 
     const activeDoor = doors[index];
     activeDoor.classList.add('open');
 
     setTimeout(() => {
         stage.classList.add('zoomed-in');
-        controls.style.opacity = '0';
-        controls.style.pointerEvents = 'none';
         portalFrame.src = pageUrls[index] || "";
 
         setTimeout(() => {
@@ -432,37 +483,11 @@ function closePortalPage() {
     setTimeout(() => {
         portalFrame.src = "about:blank";
         stage.classList.remove('zoomed-in');
-        controls.style.opacity = '1';
-        controls.style.pointerEvents = 'auto';
         doors.forEach(door => door.classList.remove('open'));
-        isHovered = false;
-        startAutoMove();
     }, 400);
 }
 
-function startAutoMove() {
-    autoScrollInterval = setInterval(() => {
-        if (!isHovered) {
-            move(1);
-        }
-    }, 3000); 
-}
-
-function stopAutoMove() {
-    clearInterval(autoScrollInterval);
-}
-
-doors.forEach((door) => {
-    door.addEventListener('mouseenter', () => isHovered = true);
-    door.addEventListener('mouseleave', () => {
-        if (!stage.classList.contains('zoomed-in')) {
-            isHovered = false;
-        }
-    });
-});
-
-layoutCircleGallery();
-startAutoMove();
+layoutVerticalRabbitHole();
 </script>
 </body>
 </html>
