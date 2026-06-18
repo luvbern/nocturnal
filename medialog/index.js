@@ -8,9 +8,9 @@ let isTransitioning = false;
 
 const pageUrls = {
     0: "https://luvbern.github.io/nocturnal/medialog/animelog.html",
-    1: "https://example.com", 
-    2: "https://example.com",
-    3: "https://example.com"
+    1: "https://luvbern.github.io/nocturnal/medialog/animelog.html", 
+    2: "https://luvbern.github.io/nocturnal/medialog/animelog.html",
+    3: "https://luvbern.github.io/nocturnal/medialog/animelog.html"
 };
 
 const totalDoors = doors.length;
