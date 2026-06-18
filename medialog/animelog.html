@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anime Log - Noctural Diary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Englebert&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1b2a49; --card:#243b67; --card2:#304c89; --text:#eef4ff; --accent:#ffd54f;}
+*{box-sizing:border-box; cursor: url("https://file.garden/ag8JwXEGxlB3Dv6B/Normal%20Select.cur"), auto;}
+::-webkit-scrollbar{width: 2px;}
+::-webkit-scrollbar-track{background: transparent;}
+::-webkit-scrollbar-thumb{background: #d6b25e; border-radius: 999px;}
+body{margin:0; padding:0; font-family: "Englebert", cursive; font-weight: 400; font-style: normal; color:var(--text); --s: 80px; --n: 4; --t: 2px; --g: 10px; --c:rgba(173, 216, 255, 0.12) 25%, #0000 0; background: radial-gradient(circle at 15% 20%, rgba(255,255,255,.8) 1px, transparent 2px), radial-gradient(circle at 75% 35%, rgba(255,255,255,.7) 1px, transparent 2px), radial-gradient(circle at 35% 80%, rgba(255,255,255,.8) 1px, transparent 2px), radial-gradient(circle at 90% 70%, rgba(255,255,255,.6) 1px, transparent 2px), radial-gradient(circle at 55% 10%, rgba(255,255,255,.7) 1px, transparent 2px), conic-gradient(at var(--g) var(--t), var(--c)) calc((var(--s)/var(--n) - var(--g) + var(--t))/2) 0/ calc(var(--s)/var(--n)) var(--s), conic-gradient(from 180deg at var(--t) var(--g), var(--c)) 0 calc((var(--s)/var(--n) - var(--g) + var(--t))/2)/ var(--s) calc(var(--s)/var(--n)), linear-gradient( 180deg, #0b1026 0%, #111b3a 35%, #1b2a49 70%, #243b67 100% ); background-size: 300px 300px, 350px 350px, 400px 400px, 450px 450px, 500px 500px, calc(var(--s)/var(--n)) var(--s), var(--s) calc(var(--s)/var(--n)), 100% 100%;}
+.controls button, .controls select,img,.card-back{cursor:url("https://file.garden/ag8JwXEGxlB3Dv6B/Link%20Select.cur"),pointer;}
+.container{max-width:1400px; margin:auto; padding:20px;}
+h1{margin-bottom:20px; text-align:center;}
+.subtitle{color:#ffd54f; margin-top:10px; font-size:20px; letter-spacing:1px;}
+.controls{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:25px;}
+.controls button, .controls select{background:var(--card); color:white; border:none; padding:8px 12px; border-radius:3px;}
+.controls button:hover, .controls select:hover{background:var(--card2);}
+.anime-grid{display:grid; grid-template-columns: repeat(auto-fill,minmax(210px,1fr)); gap:20px;}
+.card{perspective:1000px; width:220px; height:310px; margin:auto;}
+.card-inner{position:relative; width:100%; height:100%; transition:transform .7s; transform-style:preserve-3d;}
+.card.flipped .card-inner{transform:rotateY(180deg);}
+.card-front, .card-back{position:absolute; inset:0; border-radius:6px; overflow:hidden; backface-visibility:hidden;}
+.card-front{background:#0d1b34; border:3px solid #d6b25e; box-shadow: 0 0 0 2px #425c91 inset, 0 0 15px rgba(0,0,0,.5); padding:12px; position:relative;}
+.card-front img{width:100%; height:280px; object-fit:cover; border:2px solid #d6b25e;}
+.card-front::before, .card-front::after{content:"✦"; position:absolute; color:#ffd54f; font-size:22px;}
+.card-front::before{top:6px; left:8px;}
+.card-front::after{bottom:6px; right:8px;}
+.star-badge{position:absolute; top:18px; right:18px; background:#1b2a49; color:#ffd54f; border:1px solid #d6b25e; padding:4px 8px; border-radius:20px; font-size:13px;}
+.card-back{background: linear-gradient(45deg, rgba(214,178,94,.08) 25%, transparent 25%, transparent 75%, rgba(214,178,94,.08) 75% ), linear-gradient(-45deg, rgba(214,178,94,.08) 25%, transparent 25%, transparent 75%, rgba(214,178,94,.08) 75% ), #1b2a49; background-size:20px 20px; border:3px solid #d6b25e; transform:rotateY(180deg); padding:18px;}
+.card-back::after{content:"✦ ✧ ✦"; position:absolute; bottom:8px; left:50%; transform:translateX(-50%); color:#d6b25e; font-size:18px; opacity:.6;}
+.card-back::selection{background:transparent;}
+.card-back .inner-border{position:absolute; inset:8px; border:1px solid rgba(214,178,94,.5); pointer-events:none;}
+.card-back h3{margin-top:0;font-weight:500;}
+.rating{color:var(--accent); font-size:18px; margin:5px 0 10px;}
+.card-back ul{padding-left:18px;}
+.card-back li{margin-bottom:6px;}
+.no-results{display:none; text-align:center; margin:40px 0; padding:20px; background:var(--card); border-radius:12px; color:var(--text); font-size:16px;}
+.card-back{scrollbar-width: thin; scrollbar-color: #d6b25e transparent;}
+.star{position:fixed; width:2px; height:2px; background:white; border-radius:50%; pointer-events:none; box-shadow:0 0 4px white;}
+.s1{top:15%;left:20%;animation:twinkle 2s infinite;}
+.s2{top:30%;left:80%;animation:twinkle 3.5s infinite;}
+.s3{top:70%;left:40%;animation:twinkle 4s infinite;}
+.s4{top:85%;left:75%;animation:twinkle 2.8s infinite;}
+.s5{top:10%;left:60%;animation:twinkle 5s infinite;}
+@keyframes twinkle{0%,100%{opacity:.2; transform:scale(1);}
+50%{opacity:1; transform:scale(1.8);}
+}
+</style>
+</head>
+<body>
+<div class="star s1"></div>
+<div class="star s2"></div>
+<div class="star s3"></div>
+<div class="star s4"></div>
+<div class="star s5"></div>
+<div class="container">
+<h1>Anime Log</h1>
+<h2 class="subtitle">Here’s a list of anime I’m currently watching, have finished watching, or have dropped, along with my ratings from 1 to 5 stars. You can click on each image to flip it over and view more details.</h2>
+<div class="controls">
+  <button onclick="sortAZ()">A → Z</button>
+  <button onclick="sortZA()">Z → A</button>
+  <select id="ratingFilter">
+    <option value="all">All Ratings</option>
+    <option value="5">★★★★★</option>
+    <option value="4">★★★★☆</option>
+    <option value="3">★★★☆☆</option>
+    <option value="2">★★☆☆☆</option>
+    <option value="1">★☆☆☆☆</option>
+  </select>
+</div>
+<div class="anime-grid" id="animeGrid">
+    
+  <div class="card"
+       data-title="Yamato Nadeshiko Shichihenge"
+       data-rating="5">
+      
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeQk0kq8o8Ej2GOKsI6f3H_yOp9dyWul1rWQ&s" alt="Yamato Nadeshiko Shichihenge">
+        <span class="star-badge">★★★★★</span>
+      </div>
+
+      <div class="card-back">
+          <div class="inner-border"></div>
+        <h3>Yamato Nadeshiko Shichihenge</h3>
+        <div class="rating">★★★★★</div>
+        <ul>
+          <li><b>Episodes:</b> 25</li>
+          <li><b>Year:</b> 2006</li>
+          <li><b>Season:</b> 1</li>
+          <li><b>Status:</b> Completed</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card"
+       data-title="Overlord"
+       data-rating="5">
+
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShmlWN7q9Xjz-z6XTOMEcmvxpf7iPJFHFIaQ&s" alt="Overlord">
+        <span class="star-badge">★★★★★</span>
+      </div>
+
+      <div class="card-back">
+          <div class="inner-border"></div>
+        <h3>Overlord</h3>
+        <div class="rating">★★★★★</div>
+        <ul>
+          <li><b>Episodes:</b> 13</li>
+          <li><b>Year:</b> 2015</li>
+          <li><b>Season:</b> 4</li>
+          <li><b>Status:</b> Completed</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card"
+       data-title="That Time I Got Reincarnated as a Slime"
+       data-rating="5">
+
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7EYMlgx6nkpUeux3eCFBFgS0H9JsrFtCDCg&s" alt="Tensei Shitara Slime Datta Ken">
+        <span class="star-badge">★★★★★</span>
+      </div>
+
+      <div class="card-back">
+          <div class="inner-border"></div>
+        <h3>That Time I Got Reincarnated as a Slime</h3>
+        <div class="rating">★★★★★</div>
+        <ul>
+          <li><b>Episodes:</b> 24</li>
+          <li><b>Year:</b> 2018</li>
+          <li><b>Season:</b> 4</li>
+          <li><b>Status:</b> Completed</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="card"
+       data-title="A Gentle Noble's Vacation Recommendation"
+       data-rating="5">
+
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL5vsCdqCK8nUxw0ZFumbT0CVs56tKwYmHjw&s" alt="A Gentle Noble's Vacation Recommendation">
+        <span class="star-badge">★★★★★</span>
+      </div>
+
+      <div class="card-back">
+          <div class="inner-border"></div>
+        <h3>A Gentle Noble's Vacation Recommendation</h3>
+        <div class="rating">★★★★★</div>
+        <ul>
+          <li><b>Episodes:</b> 12</li>
+          <li><b>Year:</b> 2026</li>
+          <li><b>Season:</b> 1</li>
+          <li><b>Status:</b> Completed</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  
+   <div class="card"
+       data-title="Assassination Classroom"
+       data-rating="5">
+
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZbrxX9eTn_chOlnlR_s_oqQLAjW4OpclR5w&s" alt="Assassination Classroom">
+        <span class="star-badge">★★★★★</span>
+      </div>
+
+      <div class="card-back">
+          <div class="inner-border"></div>
+        <h3>Assassination Classroom</h3>
+        <div class="rating">★★★★★</div>
+        <ul>
+          <li><b>Episodes:</b> 25</li>
+          <li><b>Year:</b> 2016</li>
+          <li><b>Season:</b> 2</li>
+          <li><b>Status:</b> Completed</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  
+   <div class="card"
+       data-title="One-Punch Man"
+       data-rating="3">
+
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3phsR1Iol3NyRIShowXlhZfcLSgFMTND5nw&s" alt="One-Punch Man">
+        <span class="star-badge">★★★☆☆</span>
+      </div>
+
+      <div class="card-back">
+          <div class="inner-border"></div>
+        <h3>One-Punch Man</h3>
+        <div class="rating">★★★☆☆</div>
+        <ul>
+          <li><b>Episodes:</b> 12</li>
+          <li><b>Year:</b> 2015</li>
+          <li><b>Season:</b> 3</li>
+          <li><b>Status:</b> Dropped S3</li>
+        </ul>
+        <p>Even if the story is good but the animation is suck. Nah. </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+  <div id="noResults" class="no-results">
+   404: Anime not found! ヽ(；▽；)ノ
+</div>
+</div>
+<script>
+document.querySelectorAll('.card').forEach(card => {
+
+  card.addEventListener('click', () => {
+
+    card.classList.toggle('flipped');
+
+  });
+
+});
+
+function sortAZ() {
+
+  const grid = document.getElementById('animeGrid');
+  const cards = [...grid.querySelectorAll('.card')];
+
+  cards.sort((a,b) =>
+    a.dataset.title.localeCompare(b.dataset.title)
+  );
+
+  cards.forEach(card => grid.appendChild(card));
+
+}
+
+function sortZA() {
+
+  const grid = document.getElementById('animeGrid');
+  const cards = [...grid.querySelectorAll('.card')];
+
+  cards.sort((a,b) =>
+    b.dataset.title.localeCompare(a.dataset.title)
+  );
+
+  cards.forEach(card => grid.appendChild(card));
+
+}
+
+document
+.getElementById('ratingFilter')
+.addEventListener('change', function(){
+
+  const rating = this.value;
+  let visibleCount = 0;
+
+  document.querySelectorAll('.card')
+  .forEach(card => {
+
+    if(
+      rating === 'all' ||
+      card.dataset.rating === rating
+    ){
+      card.style.display = '';
+      visibleCount++;
+    }else{
+      card.style.display = 'none';
+    }
+
+  });
+
+  const noResults =
+    document.getElementById('noResults');
+
+  noResults.style.display =
+    visibleCount === 0
+      ? 'block'
+      : 'none';
+
+});
+</script>
+</body>
+</html>
