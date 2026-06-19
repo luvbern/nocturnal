@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comics Log - Noctural Diary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Englebert&amp;display=swap" rel="stylesheet">
+<style>
+:root{--primary:#32456b; --primary-light:#415782; --primary-lighter:#5c72a0; --text:#f6f8ff; --muted:#c8d4f3;}
+*{box-sizing:border-box; cursor: url("https://file.garden/ag8JwXEGxlB3Dv6B/Normal%20Select.cur"), auto; scrollbar-width: thin; scrollbar-color: #506899 transparent;}
+::-webkit-scrollbar{width: 1px; height: 1px;}
+::-webkit-scrollbar-track{background: transparent;}
+::-webkit-scrollbar-thumb{background: #506899; border-radius: 999px;}
+::-webkit-scrollbar-thumb:hover{background: #6d84b8;}
+.genre-tag,.clear-filter,.comic-card img,.back-btn{cursor:url("https://file.garden/ag8JwXEGxlB3Dv6B/Link%20Select.cur"),pointer;}
+body{margin:0; padding:20px; color:var(--text); font-family:"Englebert",cursive; font-weight:400; background: radial-gradient(circle at 15% 20%, rgba(255,255,255,.8) 1px, transparent 2px), radial-gradient(circle at 80% 15%, rgba(255,255,255,.7) 1px, transparent 2px), radial-gradient(circle at 30% 70%, rgba(255,255,255,.9) 1px, transparent 2px), radial-gradient(circle at 75% 60%, rgba(255,255,255,.8) 1px, transparent 2px), radial-gradient(circle at 10% 90%, rgba(255,255,255,.7) 1px, transparent 2px), repeating-linear-gradient( 180deg, transparent 0, transparent 27px, rgba(255,255,255,.03) 28px, transparent 29px ), repeating-linear-gradient( 90deg, transparent 0, transparent 27px, rgba(255,255,255,.02) 28px, transparent 29px ), radial-gradient( circle at top right, rgba(125,155,255,.12), transparent 35% ), linear-gradient( 180deg, #26395d 0%, #1f2f4d 35%, #192743 100% ); background-attachment: fixed;}
+.star{position:fixed; width:2px; height:2px; background:white; border-radius:50%; box-shadow:0 0 6px white; pointer-events:none;}
+.s1{top:15%;left:10%;animation:twinkle 2s infinite;}
+.s2{top:25%;left:75%;animation:twinkle 3.5s infinite;}
+.s3{top:60%;left:30%;animation:twinkle 4s infinite;}
+.s4{top:80%;left:85%;animation:twinkle 2.8s infinite;}
+.s5{top:10%;left:50%;animation:twinkle 5s infinite;}
+@keyframes twinkle{0%,100%{opacity:.2; transform:scale(1);}
+50%{opacity:1; transform:scale(2);}
+}
+.container{max-width:1400px; margin:auto;}
+h1{text-align:center; margin-bottom:10px;}
+.subtitle{margin:0 auto 15px; line-height:1.6; font-size:1.2em; font-weight: 500;}
+#genreCloud{margin:25px 0; text-align:center;}
+.genre-tag{display:inline-block; margin:4px; padding:8px 14px; border-radius:999px; background:var(--primary); transition:.2s;}
+.genre-tag:hover{background:var(--primary-light);}
+#genreCloudWrapper{text-align:center; margin:25px 0;}
+#clearFilter{margin-top:10px; padding:8px 14px; border:none; border-radius:999px; background:#415782; color:white;}
+#clearFilter:hover{background:#506899;}
+.comic-list{display:grid; grid-template-columns: repeat(auto-fill,minmax(100px,1fr)); gap:10px; justify-items:center;}
+.comic-card{width:100px;}
+.comic-card img{width:100px; height:150px; object-fit:cover; border-radius:6px; display:block; transition:.25s;}
+.comic-card img:hover{transform:translateY(-4px);}
+.comic-info{display:none;}
+.comic-info h3{margin:0 0 5px;}
+.comic-genres{margin-bottom:8px;}
+.small-tag{display:inline-block; background:rgba(255,255,255,.15); padding:3px 8px; border-radius:999px; font-size:.9rem; margin-right:4px;}
+.comic-desc{color:var(--muted);}
+#seriesPage{display:none;}
+.back-btn{border:none; background:var(--primary); color:white; padding:10px 15px; border-radius:10px; margin-bottom:20px;}
+.series-header{display:flex; gap:20px; align-items:flex-start;}
+.series-cover{width:180px; border-radius:15px;}
+.series-meta{flex:1;}
+.series-meta h2{margin-top:0;}
+.series-description{margin-top:25px; line-height:1.7;}
+@media(max-width:500px){.series-header{flex-direction:column;}
+.series-cover{width:100%; max-width:220px;}
+}
+</style>
+</head>
+<body>
+<div class="star s1"></div>
+<div class="star s2"></div>
+<div class="star s3"></div>
+<div class="star s4"></div>
+<div class="star s5"></div>
+<div class="container">
+<div id="mainPage">
+<h1>Comics Log</h1>
+<h2 class="subtitle">I'm usually drawn to characters who are the complete opposite of me—strong, smart, confident, a little flirty, and capable of going after what they want.</h2>
+  <h2 class="subtitle">One thing I can't stand is when a character is written as stupid or overly clingy. Even worse is when they starts off with a strong personality and good judgment, but somewhere along the way the author completely changes their character. Like, what happened?! (╯°□°)╯︵ ┻━┻ It instantly kills my interest. Idc if I'm already on Chapter 90—if the character suddenly becomes dumb for the sake of the plot, I'm dropping it lol.</h2>
+  <h2 class="subtitle">Anyway, here's my Comics Log! Click the image to view the details. I don't include any ratings because I only list the comics I genuinely enjoyed. Anything that made it onto this page is automatically a 5/5.</h2>
+  <h2 class="subtitle">I'm also into SMUUUUT, but I won't add it here hehe.</h2>
+<div id="genreCloudWrapper">
+
+  <div id="genreCloud"></div>
+
+  <button id="clearFilter"
+          onclick="clearFilter()"
+          style="display:none;">
+    Show All
+  </button>
+
+</div>
+
+<div class="comic-list" id="comicList">
+    
+<div class="comic-card"
+     data-title="Return of the Blossoming Blade"
+     data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqF-prfWvRRGGMOMMCj22n6CEv7H_QVt4qbBoh3NABIV6Bt2mQKfElLkA&s=10"
+     data-genres="Action,Comedy,Fantasy,Martial Arts"
+     data-description="When Cheongmyeong of the Mount Hua Sect awakens a hundred years in the future, his last memories are of a bloody battle against the Leader of the Demonic Cult, the evil Cheonma. The battle almost saw the end of the Ten Great Sects of ancient China, when Cheongmyeong ended the hard-fought struggle by striking down Cheonma. Soon after, he succumbed to his wounds, filled with regret at their pyrrhic victory. All is not lost, however, as he awakens to his second chance at life. Shocked to find his beloved Mount Hua Sect reduced to a mere shadow of itself in the present day, Cheongmyeong embarks on a journey to restore Mount Hua to its former glory.">
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqF-prfWvRRGGMOMMCj22n6CEv7H_QVt4qbBoh3NABIV6Bt2mQKfElLkA&s=10"
+    alt="Return of the Blossoming Blade"
+    onclick="openSeries(this.parentElement)">
+
+</div>
+
+<div class="comic-card"
+     data-title="One Day, My Sister Died"
+     data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDv2Cb37ca9o592WjrMXxATLkFTxHAAsfhcPlDd0gW1qwW28QH6wBw0zwv&s=10"
+     data-genres="Drama,Fantasy,Romance"
+     data-description="After her sister turns up dead as the latest bride of a monstrous, exiled prince, Louanne is assigned to take her place and hopes to uncover the truth. The prince initially refuses her, but with her magical powers, she begins to heal his pain each night while concealing her own. Meanwhile, her evil uncle, who took advantage of her ability in order to run a medical scheme at home, begins to crumble. Has Louanne truly escaped her cursed family, or is she stepping into something darker at Sable Manor?">
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDv2Cb37ca9o592WjrMXxATLkFTxHAAsfhcPlDd0gW1qwW28QH6wBw0zwv&s=10"
+    alt="One Day, My Sister Died"
+    onclick="openSeries(this.parentElement)">
+
+</div>
+
+<div class="comic-card"
+     data-title="This Wasn’t in My Adoption Plan!"
+     data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUfWvWGtmffkVHlWB0j2SVMwcGyepYy9QB2cNto3Oe1Wk8_yPzC8u7Wf4&s=10"
+     data-genres="Drama,Fantasy,Romance"
+     data-description="I spent a decade cleaning up after Duke Havenik Brauno’s mess only to be murdered by him? Reincarnated as Aerin Brauno, an illegitimate child of the Brauno family, she’s horrified to find her adoptive father is none other than the man who killed her. This time, Aerin refuses to let him control her fate. Armed with the knowledge from her past life, she’s determined to escape his grasp and find a new path. Can she rewrite her destiny, outsmart the deadly Duke, and maybe even save the Brauno family?">
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUfWvWGtmffkVHlWB0j2SVMwcGyepYy9QB2cNto3Oe1Wk8_yPzC8u7Wf4&s=10"
+    alt="This Wasn’t in My Adoption Plan!"
+    onclick="openSeries(this.parentElement)">
+
+</div>
+
+<div class="comic-card"
+     data-title="Too Many Heroes for the Demon Lord"
+     data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8d4RJXWaedWsGUuBmk9kpkZMJVgg97XSaAgrL709yRg&s"
+     data-genres="Action,Comedy,Fantasy"
+     data-description="Berje Deias was once a by-the-book Demon King, but after being reborn, he is determined to break every rule there is. His second attempt at life, however, takes a chaotic turn when a kidnapping of a princess doesn’t quite go to plan! Can he defeat an entire continent of heroes with his wild, untested methods?!">
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8d4RJXWaedWsGUuBmk9kpkZMJVgg97XSaAgrL709yRg&s"
+    alt="Too Many Heroes for the Demon Lord"
+    onclick="openSeries(this.parentElement)">
+
+</div>
+
+<div class="comic-card"
+     data-title="Teenage Mercenary"
+     data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wvN7KbXO9tO5NLNQ2Ec4QcyBcDT_U7Yk2ntuofBQGHK2PWPvM9mt6eY&s=10"
+     data-genres="Action,Drama"
+     data-description="At the age of eight, Ijin Yu lost his parents in a plane crash and became stranded in a foreign land, forced to become a child mercenary in order to stay alive. He returns home ten years later to be reunited with his family in Korea, where food and shelter are plenty and everything seems peaceful. But Ijin will soon learn that life as a teenager is a whole other feat of survival. With only one year of high school left, Ijin must master new tactics to maneuver his way around the schoolhouse battleground. Can he survive a year of high school? Or rather, will the school be able to survive him?">
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_wvN7KbXO9tO5NLNQ2Ec4QcyBcDT_U7Yk2ntuofBQGHK2PWPvM9mt6eY&s=10"
+    alt="Teenage Mercenary"
+    onclick="openSeries(this.parentElement)">
+
+</div>
+
+<div class="comic-card"
+     data-title="The Beloved Incompetent Stepmom"
+     data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf8Ve3lwcqBxhyKxgVkFvV-svYmirRZjPqTpB2v4Hky1Iwqiv8Q3grqQ6r&s=10"
+     data-genres="Drama,Fantasy,Romance"
+     data-description="Dismissed as incompetent and neglected by her family, the Duke’s daughter, Elsha, is suddenly ordered to marry the infamous Archduke Iceberg—a war hero feared for his ruthless reputation. Rather than despair, she seizes this chance for a fresh start. But upon arriving at his manor, she finds the Archduke missing and is instead met by his wary adopted sons, Wilbert and Hugh—who had no idea their father was remarrying. With an absent husband, distrustful stepchildren, and a manor full of secrets, can Elsha carve out a place for herself and find happiness at last?">
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf8Ve3lwcqBxhyKxgVkFvV-svYmirRZjPqTpB2v4Hky1Iwqiv8Q3grqQ6r&s=10"
+    alt="The Beloved Incompetent Stepmom"
+    onclick="openSeries(this.parentElement)">
+
+</div>
+
+<div class="comic-card"
+     data-title="Born to be the Grand Duchess"
+     data-cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXF8LoJKtaD5uXIbX_ToQBydShkkwVGYP2sOXeTZ-GvmBfOrqtK5L5gyP3&s=10"
+     data-genres="Drama,Fantasy,Romance"
+     data-description="Annette Fraise was supposed to die as the novel’s wicked villainess. Instead, she’s using her 21st-century charm to survive her marriage to the cursed Grand Duke of the North, Loic Blenheim. Between one awkward accident, a magical curse, and a one-year marriage contract, love might just become the plot twist that changes everything.">
+
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXF8LoJKtaD5uXIbX_ToQBydShkkwVGYP2sOXeTZ-GvmBfOrqtK5L5gyP3&s=10"
+    alt="Born to be the Grand Duchess"
+    onclick="openSeries(this.parentElement)">
+
+</div>
+
+</div>
+</div>
+
+<div id="seriesPage">
+<button class="back-btn" onclick="goBack()">← Back</button>
+<div class="series-header">
+<img id="detailCover" class="series-cover" src="">
+<div class="series-meta">
+<h2 id="detailTitle"></h2>
+<div id="detailGenres"></div>
+</div>
+</div>
+<div id="detailDescription" class="series-description"></div>
+</div>
+</div>
+
+<script>
+function sortComicsAZ(){
+  const list =
+    document.getElementById("comicList");
+
+  const comics =
+    [...list.querySelectorAll(".comic-card")];
+
+  comics.sort((a,b)=>
+
+    a.dataset.title.localeCompare(
+      b.dataset.title
+    )
+
+  );
+
+  comics.forEach(comic=>
+    list.appendChild(comic)
+  );
+
+}
+const genreMap={};
+
+document
+.querySelectorAll(".comic-card")
+.forEach(card=>{
+
+card.dataset.genres
+.split(",")
+.forEach(genre=>{
+
+genre=genre.trim();
+
+genreMap[genre]=(genreMap[genre]||0)+1;
+
+});
+
+});
+
+const cloud=
+document.getElementById("genreCloud");
+
+Object.entries(genreMap)
+.sort()
+.forEach(([genre,count])=>{
+
+const tag=document.createElement("span");
+
+tag.className="genre-tag";
+
+tag.textContent=
+`${genre} (${count})`;
+
+tag.onclick=
+()=>filterGenre(genre);
+
+cloud.appendChild(tag);
+
+});
+
+function filterGenre(genre){
+
+  document
+  .querySelectorAll(".comic-card")
+  .forEach(card=>{
+
+    card.style.display =
+      card.dataset.genres.includes(genre)
+      ? ""
+      : "none";
+
+  });
+
+  document
+    .getElementById("clearFilter")
+    .style.display = "inline-block";
+
+}
+
+function openSeries(card){
+
+document.getElementById("mainPage")
+.style.display="none";
+
+document.getElementById("seriesPage")
+.style.display="block";
+
+document.getElementById("detailTitle")
+.textContent=
+card.dataset.title;
+
+document.getElementById("detailCover")
+.src=
+card.dataset.cover;
+
+document.getElementById("detailDescription")
+.textContent=
+card.dataset.description;
+
+const genres=
+card.dataset.genres
+.split(",");
+
+const container=
+document.getElementById("detailGenres");
+
+container.innerHTML="";
+
+genres.forEach(g=>{
+
+container.innerHTML+=
+`<span class="genre-tag">${g}</span>`;
+
+});
+
+}
+
+function goBack(){
+
+document.getElementById("seriesPage")
+.style.display="none";
+
+document.getElementById("mainPage")
+.style.display="block";
+
+}
+function clearFilter(){
+
+  document
+  .querySelectorAll(".comic-card")
+  .forEach(card=>{
+
+    card.style.display = "";
+
+  });
+
+  document
+    .getElementById("clearFilter")
+    .style.display = "none";
+}
+sortComicsAZ();
+</script>
+</body>
+</html>
