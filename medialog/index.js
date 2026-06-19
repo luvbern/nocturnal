@@ -8,7 +8,7 @@ let isTransitioning = false;
 
 const pageUrls = {
     0: "https://luvbern.github.io/nocturnal/medialog/animelog.html",
-    1: "https://luvbern.github.io/nocturnal/medialog/animelog.html", 
+    1: "https://luvbern.github.io/nocturnal/medialog/comicslog.html", 
     2: "https://luvbern.github.io/nocturnal/medialog/animelog.html",
     3: "https://luvbern.github.io/nocturnal/medialog/animelog.html"
 };
